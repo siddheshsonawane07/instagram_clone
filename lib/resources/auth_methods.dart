@@ -21,12 +21,13 @@ class AuthMethods {
           password.isNotEmpty ||
           username.isNotEmpty ||
           bio.isNotEmpty ||
+          // ignore: unnecessary_null_comparison
           file != null) {
         //register user, data is directly stored in authentication data
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
 
-        String photoURL = await StorageMethod().uploadImageToStorage('profilePics', file, false);
+        String photoUrl = await StorageMethod().uploadImageToStorage('profilePics', file, false);
 
         //add user in firebase firestore for account photos
         await _firestore.collection('users').doc(cred.user!.uid).set({
@@ -36,7 +37,7 @@ class AuthMethods {
           'bio': bio,
           'followers': [],
           'following': [],
-          'photoUrl': photoURL,
+          'photoUrl': photoUrl,
         });
         res = "success";
       }
