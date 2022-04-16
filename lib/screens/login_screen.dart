@@ -59,9 +59,8 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Container(
                 child: _isLoading
                     ? const Center(
-                        child: CircularProgressIndicator(
-                        color: primaryColor
-                      ))
+                        child: CircularProgressIndicator(color: primaryColor),
+                      )
                     : const Text('Log in'),
                 width: double.infinity,
                 alignment: Alignment.center,
@@ -108,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void loginUser() async {
     setState(() {
-      _isLoading = false;
+      _isLoading = true;
     });
     String res = await AuthMethods().loginUser(
         email: _emailController.text, password: _passwordController.text);
