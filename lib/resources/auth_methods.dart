@@ -27,7 +27,8 @@ class AuthMethods {
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
 
-        String photoUrl = await StorageMethod().uploadImageToStorage('profilePics', file, false);
+        String photoUrl = await StorageMethod()
+            .uploadImageToStorage('profilePics', file, false);
 
         //add user in firebase firestore for account photos
         await _firestore.collection('users').doc(cred.user!.uid).set({
