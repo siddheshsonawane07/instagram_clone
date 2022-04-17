@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +19,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
       body: Center(
           child: Text(
         user.email,
-        style: TextStyle(color: primaryColor),
+        style: const TextStyle(color: primaryColor),
       )),
     );
   }
