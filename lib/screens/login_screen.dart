@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instagram_clone/screens/signup_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/utils/utils.dart';
 
@@ -88,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(width: 2),
                 GestureDetector(
-                  onTap: () => {},
+                  onTap: navigateToSignup,
                   child: Container(
                     child: const Text(
                       "Sign up",
@@ -121,5 +122,11 @@ class _LoginScreenState extends State<LoginScreen> {
       });
       showSnackBar(res, context);
     }
+  }
+
+  void navigateToSignup() {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => const SignUpScreen(),
+    ));
   }
 }
