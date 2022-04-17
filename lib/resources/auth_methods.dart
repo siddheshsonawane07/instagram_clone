@@ -22,7 +22,6 @@ class AuthMethods {
           password.isNotEmpty ||
           username.isNotEmpty ||
           bio.isNotEmpty ||
-          // ignore: unnecessary_null_comparison
           file != null) {
         //register user, data is directly stored in authentication data
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
@@ -71,5 +70,14 @@ class AuthMethods {
       res = err.toString();
     }
     return res;
+  }
+
+    Future<model.User> getUserDetails() async {
+    User currentUser = _auth.currentUser!;
+
+    DocumentSnapshot snap =
+        await _firestore.collection('users').doc(currentUser.uid).get();
+
+    return model.User.fromSnap(snap);
   }
 }

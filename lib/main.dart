@@ -2,7 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/providers/user_provider.dart';
 import 'package:instagram_clone/utils/colors.dart';
+import 'package:provider/provider.dart';
 import 'responsive/mobile_screen_layout.dart';
 import 'responsive/responsive.dart';
 import 'responsive/web_screen_layout.dart';
@@ -31,39 +33,44 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Instagram_Clone',
-      theme: ThemeData.dark()
-          .copyWith(scaffoldBackgroundColor: mobileBackgroundColor),
-      debugShowCheckedModeBanner: false,
-      home: StreamBuilder(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.active) {
-              if (snapshot.hasData) {
-                // if snapshot has data which means user is logged in then we check the width of screen and accordingly display the screen layout
-                return const ResponsiveLayout(
-                  mobileScreenLayout: MobileScreenLayout(),
-                  webScreenLayout: WebScreenLayout(),
-                );
-              } else if (snapshot.hasError) {
-                return Center(
-                  child: Text('${snapshot.error}'),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+      ],
+      child: MaterialApp(
+        title: 'Instagram_Clone',
+        theme: ThemeData.dark()
+            .copyWith(scaffoldBackgroundColor: mobileBackgroundColor),
+        debugShowCheckedModeBanner: false,
+        home: StreamBuilder(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.active) {
+                if (snapshot.hasData) {
+                  // if snapshot has data which means user is logged in then we check the width of screen and accordingly display the screen layout
+                  return const ResponsiveLayout(
+                    mobileScreenLayout: MobileScreenLayout(),
+                    webScreenLayout: WebScreenLayout(),
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text('${snapshot.error}'),
+                  );
+                }
+              }
+
+              // connecting to the future of firebase
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(
+                    color: primaryColor,
+                  ),
                 );
               }
-            }
-                        
-            // connecting to the future of firebase
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: primaryColor,
-                ),
-              );
-            }
 
-            return const LoginScreen();
-          }),
+              return const LoginScreen();
+            }),
+      ),
     );
   }
 }
