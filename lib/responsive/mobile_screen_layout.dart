@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/screens/add_post_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
+import 'package:instagram_clone/utils/global_variables.dart';
 
 class MobileScreenLayout extends StatefulWidget {
   const MobileScreenLayout({Key? key}) : super(key: key);
@@ -18,13 +19,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
-        children: [
-          Text('home'),
-          Text('searh'),
-          AddPostScreen(),
-          Text('like'),
-          Text('profile')
-        ],
+        children: homeScreenItems,
         physics: NeverScrollableScrollPhysics(),
         controller: pageController,
         onPageChanged: onPageChanged,
