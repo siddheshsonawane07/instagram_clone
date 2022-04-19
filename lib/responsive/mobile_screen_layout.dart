@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/screens/add_post_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
 
 class MobileScreenLayout extends StatefulWidget {
@@ -20,7 +21,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
         children: [
           Text('home'),
           Text('searh'),
-          Text('addphoto'),
+          AddPostScreen(),
           Text('like'),
           Text('profile')
         ],
