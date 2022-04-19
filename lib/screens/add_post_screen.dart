@@ -2,8 +2,12 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:instagram_clone/providers/user_provider.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/utils/utils.dart';
+import 'package:provider/provider.dart';
+
+import '../models/user.dart';
 
 class AddPostScreen extends StatefulWidget {
   const AddPostScreen({Key? key}) : super(key: key);
@@ -52,6 +56,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final UserProvider userProvider = Provider.of<UserProvider>(context);
+
     return _file == null
         ? Center(
             child: IconButton(
@@ -89,7 +95,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 children: [
                   CircleAvatar(
                     backgroundImage: NetworkImage(
-                        "https://images.unsplash.com/photo-1649833153197-15c20d15d516?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=383&q=80"),
+                      userProvider.getUser.photoUrl,
+                    ),
                   ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.45,
@@ -109,8 +116,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                       child: Container(
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                              image: NetworkImage(
-                                  'https://images.unsplash.com/photo-1649833153197-15c20d15d516?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=383&q=80'),
+                              image: MemoryImage(_file!),
                               fit: BoxFit.fill,
                               alignment: FractionalOffset.topCenter),
                         ),
