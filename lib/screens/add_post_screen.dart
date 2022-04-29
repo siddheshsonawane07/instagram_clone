@@ -18,10 +18,11 @@ class AddPostScreen extends StatefulWidget {
 
 class _AddPostScreenState extends State<AddPostScreen> {
   Uint8List? _file;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
-    final UserProvider userProvider = Provider.of<UserProvider>(context);
+    final User user = Provider.of<UserProvider>(context).getUser;
 
     return _file == null
         ? Center(
@@ -41,7 +42,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
               centerTitle: false,
               actions: [
                 TextButton(
-                  onPressed: () {},
+                  onPressed: postImage,
                   child: const Text(
                     "Post",
                     style: TextStyle(
@@ -60,7 +61,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 children: [
                   CircleAvatar(
                     backgroundImage: NetworkImage(
-                      userProvider.getUser.photoUrl,
+                      user.photoUrl,
                     ),
                   ),
                   SizedBox(
@@ -81,9 +82,10 @@ class _AddPostScreenState extends State<AddPostScreen> {
                       child: Container(
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                              image: MemoryImage(_file!),
-                              fit: BoxFit.fill,
-                              alignment: FractionalOffset.topCenter),
+                            image: MemoryImage(_file!),
+                            fit: BoxFit.fill,
+                            alignment: FractionalOffset.topCenter,
+                          ),
                         ),
                       ),
                     ),
@@ -108,9 +110,11 @@ class _AddPostScreenState extends State<AddPostScreen> {
               onPressed: () async {
                 Navigator.of(context).pop();
                 Uint8List file = await pickImage(ImageSource.camera);
-                setState(() {
-                  _file = file;
-                });
+                setState(
+                  () {
+                    _file = file;
+                  },
+                );
               },
             ),
             SimpleDialogOption(
@@ -126,9 +130,20 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 );
               },
             ),
+            SimpleDialogOption(
+              padding: const EdgeInsets.all(20),
+              child: const Text("Cancel"),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            )
           ],
         );
       },
     );
+  }
+
+  void postImage(){
+    
   }
 }
