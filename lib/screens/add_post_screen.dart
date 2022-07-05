@@ -66,8 +66,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.45,
-                    child: TextField(
-                      decoration: const InputDecoration(
+                    child: const TextField(
+                      decoration: InputDecoration(
                         hintText: "Write a caption ",
                         border: InputBorder.none,
                       ),

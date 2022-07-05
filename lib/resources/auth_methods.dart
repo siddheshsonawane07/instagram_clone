@@ -22,6 +22,7 @@ class AuthMethods {
           password.isNotEmpty ||
           username.isNotEmpty ||
           bio.isNotEmpty ||
+          // ignore: unnecessary_null_comparison
           file != null) {
         //register user, data is directly stored in authentication data
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
